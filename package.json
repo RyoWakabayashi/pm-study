@@ -1,0 +1,26 @@
+{
+  "name": "pm",
+  "version": "1.0.0",
+  "description": "",
+  "main": "service-worker.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint:md": "markdownlint study-materials/**/*.md",
+    "lint:md:fix": "markdownlint --fix study-materials/**/*.md"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RyoWakabayashi/pm-study.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/RyoWakabayashi/pm-study/issues"
+  },
+  "homepage": "https://github.com/RyoWakabayashi/pm-study#readme",
+  "devDependencies": {
+    "markdownlint-cli": "^0.45.0"
+  }
+}
