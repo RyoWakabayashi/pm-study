@@ -51,6 +51,21 @@
         aria-labelledby="exam-selection-title"
       >
         <h2 id="exam-selection-title">試験を選択</h2>
+        
+        <!-- 学習資料へのリンク -->
+        <div class="study-materials-link" style="margin-bottom: 20px; padding: 15px; background-color: #f8f9fa; border-left: 4px solid #3498db; border-radius: 4px;">
+          <h3 style="margin: 0 0 10px 0; color: #2c3e50; font-size: 1.1em;">📚 学習資料</h3>
+          <p style="margin: 0 0 10px 0; color: #555;">
+            過去問演習の前に、体系的な学習資料で基礎知識を固めることをお勧めします。
+          </p>
+          <a href="study-materials/README.md" 
+             style="color: #3498db; text-decoration: none; font-weight: bold;"
+             onmouseover="this.style.textDecoration='underline'"
+             onmouseout="this.style.textDecoration='none'">
+            → カテゴリ別学習資料を見る
+          </a>
+        </div>
+        
         <div id="exam-list" class="exam-list" aria-live="polite">
           <!-- 試験一覧がここに動的に表示されます -->
           <p>読み込み中...</p>
