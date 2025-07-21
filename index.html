@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>プロジェクトマネージャー試験 学習サイト</title>
+    <meta name="description" content="プロジェクトマネージャー試験の過去問をクイズ形式で学習できるサイトです。効率的に試験対策ができます。">
+    <meta name="theme-color" content="#3498db">
+    <meta name="keywords" content="プロジェクトマネージャー試験,PM試験,過去問,クイズ,学習,IPA,情報処理技術者試験">
+    <meta name="author" content="PM試験学習サイト">
+    <link rel="stylesheet" href="./css/style.css">
+    
+    <!-- Open Graph / SNS共有用メタタグ -->
+    <meta property="og:title" content="プロジェクトマネージャー試験 学習サイト">
+    <meta property="og:description" content="プロジェクトマネージャー試験の過去問をクイズ形式で学習できるサイトです。効率的に試験対策ができます。">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="./">
+    
+    <!-- PWA対応 -->
+    <link rel="manifest" href="./manifest.json">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="PM試験学習">
+    <link rel="apple-touch-icon" href="./icon-192x192.png">
+    
+    <!-- パフォーマンス最適化 -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link rel="dns-prefetch" href="https://fonts.gstatic.com">
+</head>
+<body>
+    <header role="banner">
+        <h1>プロジェクトマネージャー試験 学習サイト</h1>
+    </header>
+
+    <main role="main">
+        <section id="exam-selection" class="container" aria-labelledby="exam-selection-title">
+            <h2 id="exam-selection-title">試験を選択</h2>
+            <div id="exam-list" class="exam-list" aria-live="polite">
+                <!-- 試験一覧がここに動的に表示されます -->
+                <p>読み込み中...</p>
+            </div>
+            <button id="start-random" class="btn btn-primary" aria-label="ランダム出題で開始">ランダム出題で開始</button>
+        </section>
+
+        <section id="quiz-container" class="container hidden" aria-labelledby="quiz-title">
+            <h2 id="quiz-title" class="visually-hidden">クイズ</h2>
+            <div class="quiz-header">
+                <div class="quiz-info">
+                    <span id="question-number" aria-live="polite">問題 0/0</span>
+                    <span id="exam-info" aria-live="polite"></span>
+                </div>
+                <div class="quiz-progress" role="status" aria-live="polite">
+                    <span id="correct-count">正解: 0</span>
+                    <span id="incorrect-count">不正解: 0</span>
+                    <span id="accuracy-rate">正答率: 0%</span>
+                </div>
+            </div>
+
+            <div id="question-content" class="question-content">
+                <p id="question-text" aria-live="polite"></p>
+                <div id="question-images" class="question-images" aria-live="polite"></div>
+            </div>
+
+            <div id="options" class="options" role="radiogroup" aria-labelledby="question-text">
+                <!-- 選択肢がここに動的に表示されます -->
+            </div>
+
+            <div id="answer-result" class="answer-result hidden" aria-live="assertive">
+                <p id="result-message"></p>
+                <p id="correct-answer"></p>
+            </div>
+
+            <div class="navigation-buttons" role="navigation">
+                <button id="prev-button" class="btn" aria-label="前の問題へ">前の問題</button>
+                <button id="next-button" class="btn btn-primary hidden" aria-label="次の問題へ">次の問題</button>
+                <button id="restart-button" class="btn btn-secondary hidden" aria-label="最初から始める">最初から始める</button>
+            </div>
+        </section>
+
+        <section id="final-results" class="container hidden" aria-labelledby="results-title">
+            <h2 id="results-title">学習完了！</h2>
+            <div class="results-summary" role="region" aria-label="学習結果サマリー">
+                <p>正解数: <span id="final-correct-count">0</span></p>
+                <p>不正解数: <span id="final-incorrect-count">0</span></p>
+                <p>総問題数: <span id="final-total-count">0</span></p>
+                <p>正答率: <span id="final-accuracy-rate">0%</span></p>
+            </div>
+            <button id="restart-quiz" class="btn btn-primary" aria-label="最初から始める">最初から始める</button>
+        </section>
+    </main>
+
+    <footer role="contentinfo">
+        <p>&copy; 2025 プロジェクトマネージャー試験 学習サイト</p>
+    </footer>
+
+    <!-- JavaScript ファイル -->
+    <script src="./js/data-loader.js"></script>
+    <script src="./js/storage.js"></script>
+    <script src="./js/quiz.js"></script>
+    <script src="./js/app.js"></script>
+    <!-- テスト用スクリプト（本番環境では削除） -->
+    <!-- <script src="./js/test.js"></script> -->
+    
+    <!-- サービスワーカー登録 -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('./service-worker.js')
+                    .then(registration => {
+                        console.log('ServiceWorker registration successful with scope: ', registration.scope);
+                    })
+                    .catch(err => {
+                        console.log('ServiceWorker registration failed: ', err);
+                    });
+            });
+        }
+    </script>
+</body>
+</html>
