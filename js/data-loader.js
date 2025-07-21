@@ -7,6 +7,18 @@ class DataLoader {
         this.baseJsonPath = './exam_data/json/';
         this.baseImagePath = './exam_data/images/';
         this.availableExams = [];
+        
+        // 試験区分の日本語名マッピング
+        this.examTypeMap = {
+            'koudo': '高度情報技術者試験',
+            'pm': 'プロジェクトマネージャー試験'
+        };
+        
+        // 試験セッションの日本語名マッピング
+        this.sessionMap = {
+            'am1': '午前I',
+            'am2': '午前II'
+        };
     }
 
     /**
@@ -276,5 +288,57 @@ class DataLoader {
                 img.src = path;
             });
         }));
+    }
+    
+    /**
+     * 試験IDから出典情報を生成する
+     * @param {string} examId 試験ID
+     * @param {string} questionNumber 問題番号
+     * @returns {string} 出典情報
+     */
+    generateCitation(examId, questionNumber) {
+        // ランダム出題の場合は元の試験IDを使用
+        if (examId === 'random' && questionNumber.examId) {
+            examId = questionNumber.examId;
+            questionNumber = questionNumber.number;
+        }
+        
+        // 試験IDをパースして情報を抽出
+        const parts = examId.match(/(\d{4})r(\d{2})a_(.+)_(.+)/);
+        if (!parts) return `出典：問${questionNumber}`;
+        
+        const year = parts[1];
+        const round = parts[2];
+        const type = parts[3];
+        const session = parts[4];
+        
+        // 年号を和暦に変換
+        const japaneseYear = this.convertToJapaneseYear(parseInt(year));
+        
+        // 試験区分の日本語名を取得
+        const examType = this.examTypeMap[type] || type;
+        
+        // 試験セッションの日本語名を取得
+        const examSession = this.sessionMap[session] || session;
+        
+        // 出典情報を生成
+        return `出典：${japaneseYear}年度 ${round}回 ${examType} ${examSession} 問${questionNumber}`;
+    }
+    
+    /**
+     * 西暦を和暦に変換
+     * @param {number} year 西暦
+     * @returns {string} 和暦
+     */
+    convertToJapaneseYear(year) {
+        if (year >= 2019) {
+            return `令和${year - 2018}`;
+        } else if (year >= 1989) {
+            return `平成${year - 1988}`;
+        } else if (year >= 1926) {
+            return `昭和${year - 1925}`;
+        } else {
+            return `${year}`;
+        }
     }
 }

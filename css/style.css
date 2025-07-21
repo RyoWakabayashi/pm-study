@@ -540,6 +540,17 @@ footer {
     justify-content: center;
     width: 20px;
     font-weight: bold;
+}
+
+/* 問題の出典表示 */
+.question-citation {
+    font-size: 0.9rem;
+    color: var(--text-light);
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px dashed var(--border-color);
+    text-align: right;
+    font-style: italic;
 }/* 
 最終結果 */
 .results-summary {

@@ -455,6 +455,12 @@ document.addEventListener('DOMContentLoaded', () => {
         // 選択肢を表示
         displayOptions(question);
         
+        // 出典情報を表示
+        const examId = question.examId || currentQuiz.examId;
+        const questionNumber = question.number;
+        const citationText = dataLoader.generateCitation(examId, questionNumber);
+        document.getElementById('question-citation').textContent = citationText;
+        
         // 回答結果をクリア
         answerResultElement.classList.add('hidden');
         
