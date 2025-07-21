@@ -998,4 +998,45 @@ footer {
     .incorrect-list li {
         padding: 8px;
     }
+}/
+* 解説スタイル */
+.explanation-container {
+    margin-top: 15px;
+    padding: 15px;
+    background-color: #f9f9f9;
+    border-radius: var(--radius-sm);
+    border-left: 4px solid #3498db;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.3s, transform 0.3s;
+}
+
+.explanation-container.fade-in {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.explanation-header {
+    color: #3498db;
+    margin-bottom: 10px;
+    font-size: 1.1rem;
+}
+
+.explanation-text {
+    line-height: 1.6;
+    color: var(--text-color);
+}
+
+@media (max-width: 480px) {
+    .explanation-container {
+        padding: 12px;
+    }
+    
+    .explanation-header {
+        font-size: 1rem;
+    }
+    
+    .explanation-text {
+        font-size: 0.9rem;
+    }
 }

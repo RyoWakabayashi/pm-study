@@ -723,6 +723,64 @@ document.addEventListener('DOMContentLoaded', () => {
         // 正解の選択肢を表示
         correctAnswerElement.innerHTML = `正解: <strong>${result.correctAnswer}</strong> ${currentQuestion.options[result.correctAnswer]}`;
         
+        // 解説があれば表示
+        if (currentQuestion.explanation) {
+            // 既存の解説を削除
+            const existingExplanation = document.getElementById('explanation-container');
+            if (existingExplanation) {
+                existingExplanation.remove();
+            }
+            
+            // 解説コンテナを作成
+            const explanationContainer = document.createElement('div');
+            explanationContainer.id = 'explanation-container';
+            explanationContainer.className = 'explanation-container fade-in';
+            
+            // 解説ヘッダー
+            const explanationHeader = document.createElement('h4');
+            explanationHeader.className = 'explanation-header';
+            explanationHeader.textContent = '解説';
+            explanationContainer.appendChild(explanationHeader);
+            
+            // 解説テキスト
+            const explanationText = document.createElement('p');
+            explanationText.className = 'explanation-text';
+            explanationText.textContent = currentQuestion.explanation;
+            explanationContainer.appendChild(explanationText);
+            
+            // 解説を回答結果の後に追加
+            answerResultElement.appendChild(explanationContainer);
+        }
+        
+        // 解説があれば表示
+        if (result.explanation) {
+            // 既存の解説を削除
+            const existingExplanation = document.getElementById('explanation-container');
+            if (existingExplanation) {
+                existingExplanation.remove();
+            }
+            
+            // 解説コンテナを作成
+            const explanationContainer = document.createElement('div');
+            explanationContainer.id = 'explanation-container';
+            explanationContainer.className = 'explanation-container fade-in';
+            
+            // 解説ヘッダー
+            const explanationHeader = document.createElement('h4');
+            explanationHeader.className = 'explanation-header';
+            explanationHeader.textContent = '解説';
+            explanationContainer.appendChild(explanationHeader);
+            
+            // 解説テキスト
+            const explanationText = document.createElement('p');
+            explanationText.className = 'explanation-text';
+            explanationText.textContent = result.explanation;
+            explanationContainer.appendChild(explanationText);
+            
+            // 解説を回答結果の後に追加
+            answerResultElement.appendChild(explanationContainer);
+        }
+        
         // 選択肢のスタイルを更新（アニメーション効果を追加）
         document.querySelectorAll('.option').forEach(el => {
             const optionKey = el.dataset.option;

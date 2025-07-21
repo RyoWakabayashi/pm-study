@@ -59,40 +59,56 @@ class DataLoader {
             const maxRetries = 3;
             let retries = 0;
             let response;
+            let withExplanations = false;
             
-            // リトライ処理
-            while (retries < maxRetries) {
-                try {
-                    response = await fetch(`${this.baseJsonPath}${examId}.json`);
-                    
-                    if (response.ok) {
-                        break;
-                    }
-                    
-                    // 404エラーの場合はリトライしない
-                    if (response.status === 404) {
-                        throw new Error(`試験データ ${examId} が見つかりません。`);
-                    }
-                    
-                    // その他のエラーの場合はリトライ
-                    retries++;
-                    
-                    if (retries < maxRetries) {
-                        // 指数バックオフ（リトライ間隔を徐々に長くする）
+            // まず解説付きのJSONファイルを試す
+            try {
+                response = await fetch(`${this.baseJsonPath}${examId}_with_explanations.json`);
+                if (response.ok) {
+                    withExplanations = true;
+                    console.log(`解説付きの試験データ ${examId} を読み込みます。`);
+                }
+            } catch (e) {
+                // 解説付きのファイルがない場合は通常のファイルを使用
+                console.log(`解説付きの試験データ ${examId} が見つかりません。通常の試験データを使用します。`);
+            }
+            
+            // 解説付きのファイルがない場合は通常のファイルを使用
+            if (!withExplanations) {
+                // リトライ処理
+                while (retries < maxRetries) {
+                    try {
+                        response = await fetch(`${this.baseJsonPath}${examId}.json`);
+                        
+                        if (response.ok) {
+                            break;
+                        }
+                        
+                        // 404エラーの場合はリトライしない
+                        if (response.status === 404) {
+                            throw new Error(`試験データ ${examId} が見つかりません。`);
+                        }
+                        
+                        // その他のエラーの場合はリトライ
+                        retries++;
+                        
+                        if (retries < maxRetries) {
+                            // 指数バックオフ（リトライ間隔を徐々に長くする）
+                            const delay = Math.pow(2, retries) * 500;
+                            await new Promise(resolve => setTimeout(resolve, delay));
+                        }
+                    } catch (fetchError) {
+                        // ネットワークエラーの場合はリトライ
+                        retries++;
+                        
+                        if (retries >= maxRetries) {
+                            throw fetchError;
+                        }
+                        
+                        // 指数バックオフ
                         const delay = Math.pow(2, retries) * 500;
                         await new Promise(resolve => setTimeout(resolve, delay));
                     }
-                } catch (fetchError) {
-                    // ネットワークエラーの場合はリトライ
-                    retries++;
-                    
-                    if (retries >= maxRetries) {
-                        throw fetchError;
-                    }
-                    
-                    // 指数バックオフ
-                    const delay = Math.pow(2, retries) * 500;
-                    await new Promise(resolve => setTimeout(resolve, delay));
                 }
             }
             
@@ -162,7 +178,8 @@ class DataLoader {
             return {
                 id: examId,
                 name: examInfo.name,
-                questions: processedQuestions
+                questions: processedQuestions,
+                hasExplanations: withExplanations
             };
         } catch (error) {
             console.error(`試験データ ${examId} の読み込みに失敗しました:`, error);
