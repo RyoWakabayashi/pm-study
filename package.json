@@ -5,6 +5,9 @@
   "main": "service-worker.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "npx serve . -p 8000",
+    "dev": "npx serve . -p 8000",
+    "serve": "npx serve . -p 8000",
     "lint:md": "markdownlint study-materials/**/*.md",
     "lint:md:fix": "markdownlint --fix study-materials/**/*.md"
   },

@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="192" height="192" viewBox="0 0 192 192">
+  <!-- 背景 -->
+  <rect width="192" height="192" fill="#3498db" />
+  
+  <!-- 円形の枠 -->
+  <circle cx="96" cy="96" r="76" fill="white" />
+  
+  <!-- PMの文字 -->
+  <text x="96" y="96" font-family="Arial, sans-serif" font-size="58" font-weight="bold" text-anchor="middle" dominant-baseline="middle" fill="#2c3e50">PM</text>
+  
+  <!-- 下部のテキスト -->
+  <text x="96" y="144" font-family="Arial, sans-serif" font-size="19" text-anchor="middle" dominant-baseline="middle" fill="#2c3e50">試験</text>
+</svg>
