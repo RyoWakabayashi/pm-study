@@ -626,6 +626,7 @@ footer {
 .question-text {
     display: block;
     margin-bottom: 8px;
+    white-space: pre-wrap;
 }
 
 .answer-info {
